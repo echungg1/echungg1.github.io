@@ -8,22 +8,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg:        #08080c;
-      --bg2:       #0f0f15;
-      --surface:   #14141c;
-      --border:    rgba(255,255,255,0.07);
-      --border2:   rgba(255,255,255,0.13);
-
-      /* Surprise accent: electric violet-periwinkle */
-      --ac:        #7c6bff;
-      --ac-dim:    rgba(124,107,255,0.14);
-      --ac-glow:   rgba(124,107,255,0.07);
-      --ac-bright: #a99dff;
-      --ac-pale:   rgba(124,107,255,0.08);
-
-      --white:  #f0edf8;
-      --muted:  rgba(240,237,248,0.45);
-      --coral:  #ff6b6b;
+      --bg: #0a0a0b;
+      --bg2: #111113;
+      --surface: #16161a;
+      --border: rgba(255,255,255,0.07);
+      --gold: #c9a84c;
+      --gold-dim: rgba(201,168,76,0.15);
+      --gold-glow: rgba(201,168,76,0.08);
+      --white: #f0ede8;
+      --muted: rgba(240,237,232,0.45);
+      --accent: #e8d5a3;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,83 +33,78 @@
       cursor: none;
     }
 
-    /* ── Cursor ── */
+    /* Custom cursor */
     .cursor {
-      position: fixed; width: 7px; height: 7px;
-      background: var(--ac); border-radius: 50%;
+      position: fixed; width: 8px; height: 8px;
+      background: var(--gold); border-radius: 50%;
       pointer-events: none; z-index: 9999;
       transform: translate(-50%,-50%);
       mix-blend-mode: screen;
     }
     .cursor-ring {
-      position: fixed; width: 34px; height: 34px;
-      border: 1px solid rgba(124,107,255,0.55); border-radius: 50%;
+      position: fixed; width: 32px; height: 32px;
+      border: 1px solid rgba(201,168,76,0.5); border-radius: 50%;
       pointer-events: none; z-index: 9998;
       transform: translate(-50%,-50%);
       transition: width .2s, height .2s;
     }
 
-    /* ── Grain overlay ── */
+    /* Film grain */
     body::before {
       content: '';
       position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.025; pointer-events: none; z-index: 1000;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.028; pointer-events: none; z-index: 1000;
     }
 
-    /* ── Top accent bar ── */
-    .top-bar {
-      position: fixed; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--ac), var(--ac-bright), transparent);
-      z-index: 600;
+    /* Top bar */
+    .film-bar {
+      position: fixed; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      z-index: 500;
     }
 
-    /* ── Nav ── */
+    /* Nav */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-      padding: 26px 60px;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 400;
+      padding: 28px 60px;
       display: flex; justify-content: space-between; align-items: center;
-      background: linear-gradient(to bottom, rgba(8,8,12,0.96), transparent);
+      background: linear-gradient(to bottom, rgba(10,10,11,0.95), transparent);
     }
     .nav-logo {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.35rem; font-weight: 300; letter-spacing: 0.1em;
+      font-size: 1.4rem; font-weight: 300; letter-spacing: 0.12em;
       color: var(--white); text-decoration: none;
     }
-    .nav-logo span { color: var(--ac); }
+    .nav-logo span { color: var(--gold); }
 
     .nav-right { display: flex; align-items: center; gap: 40px; }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
+
+    .nav-links { display: flex; gap: 40px; list-style: none; }
     .nav-links a {
-      font-family: 'DM Mono', monospace; font-size: 0.67rem;
+      font-family: 'DM Mono', monospace; font-size: 0.68rem;
       letter-spacing: 0.18em; text-transform: uppercase;
       color: var(--muted); text-decoration: none; transition: color .3s;
       position: relative;
     }
     .nav-links a::after {
       content: ''; position: absolute; bottom: -3px; left: 0;
-      width: 0; height: 1px; background: var(--ac); transition: width .3s;
+      width: 0; height: 1px; background: var(--gold); transition: width .3s;
     }
     .nav-links a:hover { color: var(--white); }
     .nav-links a:hover::after { width: 100%; }
 
-    /* Resume button in nav */
     .btn-resume-nav {
       font-family: 'DM Mono', monospace; font-size: 0.65rem;
       letter-spacing: 0.18em; text-transform: uppercase;
-      padding: 9px 20px;
-      border: 1px solid var(--ac);
-      color: var(--ac); text-decoration: none;
-      transition: all .3s;
+      padding: 9px 20px; border: 1px solid var(--gold);
+      color: var(--gold); text-decoration: none; transition: all .3s;
     }
-    .btn-resume-nav:hover {
-      background: var(--ac); color: var(--bg);
-    }
+    .btn-resume-nav:hover { background: var(--gold); color: var(--bg); }
 
-    /* ── Hero ── */
+    /* Hero */
     #hero {
-      min-height: 100vh;
-      padding: 0 60px;
+      min-height: 100vh; padding: 0 60px;
       display: flex; align-items: center;
       position: relative; overflow: hidden;
     }
@@ -123,81 +112,77 @@
     .hero-bg {
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse 55% 55% at 68% 50%, rgba(124,107,255,0.07) 0%, transparent 70%),
-        radial-gradient(ellipse 35% 50% at 15% 80%, rgba(60,40,120,0.1) 0%, transparent 60%);
+        radial-gradient(ellipse 60% 50% at 70% 50%, rgba(201,168,76,0.055) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(100,60,20,0.12) 0%, transparent 60%);
     }
 
-    /* Film strip */
     .film-strip {
       position: absolute; right: 0; top: 0; bottom: 0;
-      width: 46px; display: flex; flex-direction: column; opacity: 0.1;
+      width: 48px; display: flex; flex-direction: column; opacity: 0.12;
     }
     .film-hole {
-      width: 26px; height: 18px; margin: 6px auto;
-      border: 1.5px solid var(--ac); border-radius: 3px; flex-shrink: 0;
+      width: 28px; height: 20px; margin: 6px auto;
+      border: 1.5px solid var(--gold); border-radius: 3px; flex-shrink: 0;
     }
 
-    .hero-content { position: relative; z-index: 1; max-width: 700px; }
+    .hero-content { position: relative; z-index: 1; max-width: 720px; }
 
     .hero-eyebrow {
-      font-family: 'DM Mono', monospace; font-size: 0.67rem;
-      letter-spacing: 0.3em; text-transform: uppercase; color: var(--ac);
+      font-family: 'DM Mono', monospace; font-size: 0.68rem;
+      letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold);
       margin-bottom: 28px; display: flex; align-items: center; gap: 16px;
       opacity: 0; animation: fadeUp .8s .2s forwards;
     }
-    .hero-eyebrow::before { content: ''; width: 36px; height: 1px; background: var(--ac); }
+    .hero-eyebrow::before { content: ''; width: 40px; height: 1px; background: var(--gold); }
 
     .hero-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(4rem, 8vw, 7.5rem);
-      font-weight: 300; line-height: .95; letter-spacing: -.02em;
-      opacity: 0; animation: fadeUp .9s .38s forwards;
+      font-size: clamp(4rem, 8vw, 7.5rem); font-weight: 300;
+      line-height: .95; letter-spacing: -.02em;
+      opacity: 0; animation: fadeUp .9s .4s forwards;
     }
-    .hero-name em { font-style: italic; color: var(--ac-bright); }
+    .hero-name em { font-style: italic; color: var(--accent); }
 
     .hero-tagline {
       margin-top: 28px; font-size: 1.05rem; color: var(--muted);
-      max-width: 480px; line-height: 1.75;
-      opacity: 0; animation: fadeUp .9s .56s forwards;
+      max-width: 480px; line-height: 1.7;
+      opacity: 0; animation: fadeUp .9s .6s forwards;
     }
 
     .hero-cta {
       margin-top: 48px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
-      opacity: 0; animation: fadeUp .9s .72s forwards;
+      opacity: 0; animation: fadeUp .9s .8s forwards;
     }
 
     .btn-primary {
-      padding: 13px 32px; background: var(--ac);
-      color: var(--bg); font-family: 'DM Mono', monospace;
-      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 13px 32px; background: var(--gold); color: #0a0a0b;
+      font-family: 'DM Mono', monospace; font-size: 0.7rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
       text-decoration: none; font-weight: 500; transition: all .3s;
     }
     .btn-primary:hover {
-      background: var(--ac-bright); transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(124,107,255,0.3);
+      background: var(--accent); transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(201,168,76,0.25);
     }
 
     .btn-ghost {
-      padding: 13px 32px; border: 1px solid var(--border2);
+      padding: 13px 32px; border: 1px solid var(--border);
       color: var(--muted); font-family: 'DM Mono', monospace;
-      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
       text-decoration: none; transition: all .3s;
     }
-    .btn-ghost:hover { border-color: var(--ac); color: var(--ac); }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.3); color: var(--white); }
 
-    /* Resume CTA hero */
     .btn-resume-hero {
-      padding: 13px 28px;
-      border: 1px solid rgba(124,107,255,0.4);
-      color: var(--ac-bright); font-family: 'DM Mono', monospace;
+      padding: 13px 28px; border: 1px solid rgba(201,168,76,0.4);
+      color: var(--accent); font-family: 'DM Mono', monospace;
       font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
       text-decoration: none; transition: all .3s;
       display: inline-flex; align-items: center; gap: 8px;
     }
-    .btn-resume-hero:hover { border-color: var(--ac); background: var(--ac-dim); }
+    .btn-resume-hero:hover { border-color: var(--gold); background: var(--gold-dim); }
     .btn-resume-hero svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; }
 
-    /* Hero stats */
     .hero-stats {
       position: absolute; bottom: 60px; right: 80px;
       display: flex; flex-direction: column; gap: 24px;
@@ -208,144 +193,101 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: 2.2rem; font-weight: 300; line-height: 1;
     }
-    .stat-num span { color: var(--ac); }
+    .stat-num span { color: var(--gold); }
     .stat-label {
-      font-family: 'DM Mono', monospace; font-size: 0.59rem;
+      font-family: 'DM Mono', monospace; font-size: 0.6rem;
       letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 4px;
     }
 
-    /* ── Shared section ── */
+    /* Sections */
     section { padding: 120px 60px; position: relative; }
 
     .section-label {
-      font-family: 'DM Mono', monospace; font-size: 0.64rem;
-      letter-spacing: 0.3em; text-transform: uppercase; color: var(--ac);
-      display: flex; align-items: center; gap: 16px; margin-bottom: 60px;
+      font-family: 'DM Mono', monospace; font-size: 0.65rem;
+      letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold);
+      display: flex; align-items: center; gap: 16px; margin-bottom: 64px;
     }
-    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); max-width: 180px; }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); max-width: 200px; }
 
     .section-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.4rem, 4vw, 3.6rem);
-      font-weight: 300; line-height: 1.1; margin-bottom: 20px;
+      font-size: clamp(2.5rem, 4vw, 3.8rem); font-weight: 300;
+      line-height: 1.1; margin-bottom: 24px;
     }
-    .section-title em { font-style: italic; color: var(--ac-bright); }
+    .section-title em { font-style: italic; color: var(--accent); }
 
-    /* ── About ── */
+    /* About */
     #about { background: var(--bg2); }
 
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 80px; align-items: start;
-    }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
 
-    .about-body { font-size: 1rem; color: rgba(240,237,248,0.68); line-height: 1.9; }
-    .about-body p + p { margin-top: 18px; }
-    .about-body strong { color: var(--white); }
+    .about-body { font-size: 1rem; color: rgba(240,237,232,0.7); line-height: 1.9; }
+    .about-body p + p { margin-top: 20px; }
+    .about-body strong { color: var(--white); font-weight: 600; }
 
-    .about-right { display: flex; flex-direction: column; gap: 24px; }
-
-    /* Conference photo */
-    .conf-photo-wrap {
-      position: relative; overflow: hidden;
-      border: 1px solid var(--border2);
-    }
-    .conf-photo-wrap img {
-      width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;
-      transition: transform .5s ease;
-    }
-    .conf-photo-wrap:hover img { transform: scale(1.03); }
-
-    .photo-placeholder {
-      width: 100%; aspect-ratio: 4/3;
-      background: var(--surface);
-      border: 2px dashed rgba(124,107,255,0.25);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 10px; color: var(--muted);
-      font-family: 'DM Mono', monospace; font-size: 0.7rem;
-      letter-spacing: 0.1em; text-align: center; padding: 20px;
-    }
-    .photo-placeholder span { font-size: 2rem; opacity: 0.5; }
-
-    .photo-caption {
-      font-family: 'DM Mono', monospace; font-size: 0.6rem;
-      letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
-    }
-
-    .about-cards { display: flex; flex-direction: column; gap: 12px; }
+    .about-details { display: flex; flex-direction: column; gap: 32px; }
 
     .detail-card {
-      border: 1px solid var(--border); padding: 22px 24px;
-      background: var(--surface); position: relative; overflow: hidden;
-      transition: border-color .3s;
+      border: 1px solid var(--border); padding: 28px;
+      background: var(--surface); position: relative; overflow: hidden; transition: border-color .3s;
     }
     .detail-card::before {
       content: ''; position: absolute; top: 0; left: 0;
-      width: 2px; height: 0; background: var(--ac); transition: height .4s;
+      width: 2px; height: 0; background: var(--gold); transition: height .4s;
     }
     .detail-card:hover::before { height: 100%; }
-    .detail-card:hover { border-color: rgba(124,107,255,0.3); }
+    .detail-card:hover { border-color: rgba(201,168,76,0.25); }
     .detail-card-label {
-      font-family: 'DM Mono', monospace; font-size: 0.58rem;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--ac); margin-bottom: 8px;
+      font-family: 'DM Mono', monospace; font-size: 0.6rem;
+      letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
     }
-    .detail-card-value { font-size: 0.9rem; color: var(--white); line-height: 1.5; }
+    .detail-card-value { font-size: 0.95rem; color: var(--white); }
 
-    /* ── Experience ── */
+    /* Experience */
     #experience { background: var(--bg); }
 
-    .timeline { max-width: 800px; position: relative; }
+    .timeline { display: flex; flex-direction: column; position: relative; max-width: 800px; }
     .timeline::before {
-      content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
+      content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
       width: 1px; background: var(--border);
     }
 
     .timeline-item { padding: 0 0 52px 40px; position: relative; }
     .timeline-item::before {
       content: ''; position: absolute; left: -4px; top: 8px;
-      width: 9px; height: 9px;
-      border: 1px solid var(--ac); background: var(--bg); border-radius: 50%;
-      transition: background .3s;
+      width: 9px; height: 9px; border: 1px solid var(--gold);
+      background: var(--bg); border-radius: 50%; transition: background .3s;
     }
-    .timeline-item:hover::before { background: var(--ac); }
+    .timeline-item:hover::before { background: var(--gold); }
 
     .timeline-date {
-      font-family: 'DM Mono', monospace; font-size: 0.61rem;
-      letter-spacing: 0.2em; text-transform: uppercase; color: var(--ac); margin-bottom: 10px;
+      font-family: 'DM Mono', monospace; font-size: 0.62rem;
+      letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 10px;
     }
-    .timeline-role {
-      font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;
-      font-weight: 400; margin-bottom: 4px;
-    }
-    .timeline-org { font-size: 0.83rem; color: var(--muted); margin-bottom: 16px; }
+    .timeline-role { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 4px; }
+    .timeline-org { font-size: 0.85rem; color: var(--muted); margin-bottom: 16px; }
     .timeline-bullets { list-style: none; display: flex; flex-direction: column; gap: 8px; }
     .timeline-bullets li {
-      font-size: 0.88rem; color: rgba(240,237,248,0.6);
-      padding-left: 18px; position: relative; line-height: 1.65;
+      font-size: 0.9rem; color: rgba(240,237,232,0.65);
+      padding-left: 18px; position: relative; line-height: 1.6;
     }
-    .timeline-bullets li::before {
-      content: '—'; position: absolute; left: 0;
-      color: var(--ac); font-size: 0.75rem;
-    }
+    .timeline-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--gold); font-size: .75rem; }
 
-    /* ── Projects ── */
+    /* Projects */
     #projects { background: var(--bg2); }
 
     .projects-list { display: flex; flex-direction: column; gap: 2px; }
 
     .project-row {
       display: grid; grid-template-columns: 300px 1fr;
-      background: var(--surface); overflow: hidden;
-      transition: box-shadow .3s;
+      background: var(--surface); overflow: hidden; transition: box-shadow .3s;
     }
-    .project-row:hover { box-shadow: 0 0 0 1px rgba(124,107,255,0.25), 0 8px 40px rgba(0,0,0,0.4); }
+    .project-row:hover { box-shadow: 0 0 0 1px rgba(201,168,76,0.2), 0 8px 40px rgba(0,0,0,0.5); }
 
     /* image col */
     .project-img-col {
-      position: relative; overflow: hidden; min-height: 240px;
-      background: var(--bg);
+      position: relative; overflow: hidden;
+      min-height: 240px; background: var(--bg);
     }
     .project-img-col img {
       width: 100%; height: 100%; object-fit: cover; display: block;
@@ -355,24 +297,25 @@
 
     .project-img-placeholder {
       width: 100%; height: 100%; min-height: 240px;
-      background: var(--ac-pale);
+      background: rgba(201,168,76,0.05);
+      border-right: 1px solid var(--border);
       display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 10px;
+      align-items: center; justify-content: center; gap: 12px;
     }
-    .project-img-placeholder .p-icon { font-size: 3rem; opacity: 0.35; }
-    .project-img-placeholder .p-hint {
-      font-family: 'DM Mono', monospace; font-size: 0.6rem;
+    .p-icon { font-size: 2.8rem; opacity: 0.3; }
+    .p-hint {
+      font-family: 'DM Mono', monospace; font-size: 0.58rem;
       letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--ac); opacity: 0.6; text-align: center; padding: 0 16px;
+      color: var(--gold); opacity: 0.5; text-align: center; padding: 0 16px;
     }
 
-    /* image overlay bar */
+    /* hover overlay */
     .img-overlay {
       position: absolute; bottom: 0; left: 0; right: 0;
       padding: 10px 14px;
-      background: linear-gradient(transparent, rgba(8,8,12,0.85));
+      background: linear-gradient(transparent, rgba(10,10,11,0.9));
       font-family: 'DM Mono', monospace; font-size: 0.58rem;
-      letter-spacing: 0.14em; text-transform: uppercase; color: var(--ac);
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold);
       opacity: 0; transition: opacity .3s;
     }
     .project-row:hover .img-overlay { opacity: 1; }
@@ -381,10 +324,10 @@
     .project-content { padding: 36px 44px; display: flex; flex-direction: column; justify-content: center; }
 
     .project-meta { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
-    .project-badge {
+    .project-num {
       font-family: 'DM Mono', monospace; font-size: 0.6rem;
       letter-spacing: 0.14em; color: var(--bg);
-      background: var(--ac); padding: 3px 10px;
+      background: var(--gold); padding: 3px 10px;
     }
     .project-event {
       font-family: 'DM Mono', monospace; font-size: 0.6rem;
@@ -392,86 +335,81 @@
     }
 
     .project-title {
-      font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.55rem;
       font-weight: 400; line-height: 1.2; margin-bottom: 10px;
     }
-    .project-desc { font-size: 0.87rem; color: rgba(240,237,248,0.6); line-height: 1.75; margin-bottom: 22px; }
+    .project-desc { font-size: 0.88rem; color: rgba(240,237,232,0.6); line-height: 1.7; margin-bottom: 22px; }
 
     .project-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 
     .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
     .tag {
       font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em;
-      padding: 4px 10px; border: 1px solid var(--border); color: var(--muted);
-      text-transform: uppercase; transition: all .2s;
+      padding: 4px 10px; border: 1px solid var(--border);
+      color: var(--muted); text-transform: uppercase; transition: all .2s;
     }
-    .project-row:hover .tag { border-color: rgba(124,107,255,0.25); color: var(--ac-bright); }
+    .project-row:hover .tag { border-color: rgba(201,168,76,0.2); color: var(--accent); }
 
     .project-links { display: flex; gap: 12px; }
     .project-link {
       font-family: 'DM Mono', monospace; font-size: 0.63rem;
       letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--ac); text-decoration: none;
+      color: var(--gold); text-decoration: none;
       border-bottom: 1px solid transparent; padding-bottom: 1px;
       transition: border-color .2s; display: inline-flex; align-items: center; gap: 5px;
     }
-    .project-link:hover { border-bottom-color: var(--ac); }
+    .project-link:hover { border-bottom-color: var(--gold); }
 
-    /* ── Skills ── */
+    /* Skills */
     #skills { background: var(--bg); }
 
-    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .skills-layout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
 
-    .skill-group {
-      background: var(--surface); padding: 32px; position: relative; overflow: hidden;
-    }
+    .skill-group { background: var(--surface); padding: 36px; position: relative; overflow: hidden; }
     .skill-group::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0;
-      height: 1px; background: linear-gradient(90deg, var(--ac), transparent);
-      opacity: 0; transition: opacity .3s;
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent); opacity: 0; transition: opacity .3s;
     }
     .skill-group:hover::before { opacity: 1; }
 
     .skill-group-title {
-      font-family: 'DM Mono', monospace; font-size: 0.61rem;
-      letter-spacing: 0.24em; text-transform: uppercase;
-      color: var(--ac); margin-bottom: 18px;
+      font-family: 'DM Mono', monospace; font-size: 0.62rem;
+      letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px;
     }
-    .skill-list { display: flex; flex-wrap: wrap; gap: 7px; }
+    .skill-list { display: flex; flex-wrap: wrap; gap: 8px; }
     .skill-pill {
-      font-family: 'DM Mono', monospace; font-size: 0.64rem;
-      padding: 5px 11px; background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border); color: rgba(240,237,248,0.72);
-      letter-spacing: 0.06em; transition: all .2s;
+      font-family: 'DM Mono', monospace; font-size: 0.65rem;
+      padding: 6px 12px; background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border); color: rgba(240,237,232,0.75);
+      letter-spacing: 0.08em; transition: all .2s;
     }
-    .skill-pill:hover { background: var(--ac-dim); border-color: rgba(124,107,255,0.3); color: var(--ac-bright); }
+    .skill-pill:hover { background: var(--gold-dim); border-color: rgba(201,168,76,0.3); color: var(--accent); }
 
-    /* ── Leadership ── */
+    /* Leadership */
     #leadership { background: var(--bg2); }
 
-    .leadership-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .leadership-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 
     .leadership-card {
-      border: 1px solid var(--border); padding: 30px;
-      background: var(--surface); transition: all .3s; position: relative; overflow: hidden;
+      border: 1px solid var(--border); padding: 32px;
+      position: relative; transition: all .3s; overflow: hidden;
     }
     .leadership-card::after {
-      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-      height: 2px; background: var(--ac);
-      transform: scaleX(0); transform-origin: left; transition: transform .4s;
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform .4s;
     }
     .leadership-card:hover::after { transform: scaleX(1); }
-    .leadership-card:hover { border-color: rgba(124,107,255,0.2); transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,0.3); }
+    .leadership-card:hover { border-color: rgba(201,168,76,0.25); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
 
-    .leadership-icon { font-size: 1.5rem; margin-bottom: 14px; }
+    .leadership-icon { font-size: 1.6rem; margin-bottom: 16px; }
     .leadership-title { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 400; margin-bottom: 4px; }
     .leadership-org {
-      font-family: 'DM Mono', monospace; font-size: 0.58rem;
-      letter-spacing: 0.16em; text-transform: uppercase; color: var(--ac); margin-bottom: 12px;
+      font-family: 'DM Mono', monospace; font-size: 0.6rem;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px;
     }
-    .leadership-desc { font-size: 0.84rem; color: rgba(240,237,248,0.55); line-height: 1.65; }
+    .leadership-desc { font-size: 0.84rem; color: rgba(240,237,232,0.55); line-height: 1.65; }
 
-    /* ── Contact ── */
+    /* Contact */
     #contact { background: var(--bg); padding: 120px 60px 80px; overflow: hidden; }
 
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
@@ -480,7 +418,26 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(3rem, 5vw, 5.5rem); font-weight: 300; line-height: 1.05;
     }
-    .contact-big em { font-style: italic; color: var(--ac-bright); }
+    .contact-big em { font-style: italic; color: var(--accent); }
+
+    /* Resume download block */
+    .resume-block {
+      margin-top: 36px; padding: 28px;
+      border: 1px solid rgba(201,168,76,0.2);
+      background: var(--gold-glow);
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .resume-block-text { font-size: 0.9rem; color: rgba(240,237,232,0.6); }
+    .resume-block-text strong { color: var(--white); display: block; margin-bottom: 4px; }
+    .btn-resume-dl {
+      flex-shrink: 0; padding: 12px 24px; background: var(--gold);
+      color: var(--bg); font-family: 'DM Mono', monospace;
+      font-size: 0.67rem; letter-spacing: 0.16em; text-transform: uppercase;
+      text-decoration: none; white-space: nowrap; transition: all .3s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-resume-dl:hover { background: var(--accent); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(201,168,76,0.25); }
+    .btn-resume-dl svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2.2; }
 
     .contact-items { display: flex; flex-direction: column; }
     .contact-item {
@@ -491,72 +448,49 @@
     .contact-item:last-child { border-bottom: none; }
     .contact-item:hover { color: var(--white); }
     .contact-item-type {
-      font-family: 'DM Mono', monospace; font-size: 0.59rem;
-      letter-spacing: 0.2em; text-transform: uppercase; color: var(--ac); min-width: 68px;
+      font-family: 'DM Mono', monospace; font-size: 0.6rem;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); min-width: 70px;
     }
-    .contact-arrow {
-      margin-left: auto; opacity: 0; transform: translateX(-6px);
-      transition: all .25s; color: var(--ac);
-    }
+    .contact-arrow { margin-left: auto; opacity: 0; transform: translateX(-6px); transition: all .25s; color: var(--gold); }
     .contact-item:hover .contact-arrow { opacity: 1; transform: none; }
 
-    /* Resume download block */
-    .resume-block {
-      margin-top: 40px; padding: 28px;
-      border: 1px solid rgba(124,107,255,0.25);
-      background: var(--ac-pale);
-      display: flex; align-items: center; justify-content: space-between; gap: 20px;
-    }
-    .resume-block-text { font-size: 0.9rem; color: rgba(240,237,248,0.65); }
-    .resume-block-text strong { color: var(--white); display: block; margin-bottom: 4px; font-size: 1rem; }
-    .btn-resume-dl {
-      flex-shrink: 0;
-      padding: 12px 24px; background: var(--ac);
-      color: var(--bg); font-family: 'DM Mono', monospace;
-      font-size: 0.67rem; letter-spacing: 0.16em; text-transform: uppercase;
-      text-decoration: none; white-space: nowrap; transition: all .3s;
-      display: inline-flex; align-items: center; gap: 8px;
-    }
-    .btn-resume-dl:hover { background: var(--ac-bright); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(124,107,255,0.3); }
-    .btn-resume-dl svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2.2; }
-
     .footer-bar {
-      margin-top: 80px; padding-top: 28px; border-top: 1px solid var(--border);
+      margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--border);
       display: flex; justify-content: space-between; align-items: center;
     }
-    .footer-copy { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em; color: rgba(240,237,248,0.2); }
-    .footer-tagline { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: rgba(240,237,248,0.18); }
+    .footer-copy { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; color: rgba(240,237,232,0.2); }
+    .footer-tagline { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: rgba(240,237,232,0.18); }
 
-    /* ── Scroll fade ── */
-    .fade-in { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+    /* Scroll fade */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
     .fade-in.visible { opacity: 1; transform: none; }
 
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(22px); }
+      from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: none; }
     }
     @keyframes fadeLeft {
-      from { opacity: 0; transform: translateX(22px); }
+      from { opacity: 0; transform: translateX(24px); }
       to   { opacity: 1; transform: none; }
     }
 
-    /* ── Responsive ── */
+    /* Responsive */
     @media (max-width: 960px) {
-      nav { padding: 22px 28px; }
+      nav { padding: 24px 28px; }
       .nav-links { display: none; }
       section { padding: 80px 28px; }
       #hero { padding: 0 28px; }
-      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 44px; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
       .project-row { grid-template-columns: 1fr; }
       .project-img-col { min-height: 200px; }
-      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .skills-layout { grid-template-columns: 1fr 1fr; }
       .leadership-grid { grid-template-columns: 1fr; }
       .hero-stats { display: none; }
       #contact { padding: 80px 28px 60px; }
       .resume-block { flex-direction: column; align-items: flex-start; }
     }
     @media (max-width: 600px) {
-      .skills-grid { grid-template-columns: 1fr; }
+      .skills-layout { grid-template-columns: 1fr; }
       .btn-resume-nav { display: none; }
     }
   </style>
@@ -565,9 +499,9 @@
 
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
-  <div class="top-bar"></div>
+  <div class="film-bar"></div>
 
-  <!-- ── Nav ── -->
+  <!-- Nav -->
   <nav>
     <a href="#hero" class="nav-logo">Esther <span>Chung</span></a>
     <div class="nav-right">
@@ -578,12 +512,12 @@
         <li><a href="#skills">Skills</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-      <!-- ↓ UPDATE href to your resume PDF filename once uploaded -->
+      <!-- UPDATE href to your resume PDF filename once uploaded -->
       <a href="Esther_Chung_Resume.pdf" target="_blank" class="btn-resume-nav">Resume ↗</a>
     </div>
   </nav>
 
-  <!-- ── Hero ── -->
+  <!-- Hero -->
   <section id="hero">
     <div class="hero-bg"></div>
     <div class="film-strip" aria-hidden="true">
@@ -630,64 +564,50 @@
     </div>
   </section>
 
-  <!-- ── About ── -->
+  <!-- About -->
   <section id="about">
     <div class="section-label">01 — About</div>
     <div class="about-grid">
       <div>
-        <h2 class="section-title fade-in">Where <em>data meets</em> impact</h2>
+        <h2 class="section-title fade-in">Turning <em>data</em> into<br>decisions</h2>
         <div class="about-body fade-in">
           <p>
             I'm a <strong>Data Science student at UC San Diego</strong> (expected June 2027)
             with a minor in Linguistics. I'm passionate about applying machine learning and
-            analytics to problems that have real-world consequences — from environmental
-            forecasting to health data and beyond.
+            analytics to problems with real-world impact — from environmental forecasting
+            to health data and interactive visualization.
           </p>
           <p>
             My work spans <strong>deep learning, statistical modeling, and full-stack development</strong>.
-            I've designed CNN-LSTM architectures, deployed production-ready applications, and
-            co-authored research presented at an undergraduate conference. I thrive where
-            technical rigor meets clear communication.
+            I've designed CNN-LSTM architectures, deployed production-ready web applications,
+            and co-authored research presented at an undergraduate conference — all while leading
+            operations for student organizations serving hundreds of members.
           </p>
           <p>
             I'm actively seeking internship opportunities in data science, ML engineering,
-            and analytics — on teams that care as much about the story behind the data
+            and analytics. I thrive on teams that care as much about the story behind the data
             as the model that surfaces it.
           </p>
         </div>
       </div>
-      <div class="about-right fade-in">
-        <!--
-          PHOTO INSTRUCTIONS:
-          1. Save your conference photo in the same folder as index.html
-          2. Delete the .photo-placeholder div
-          3. Uncomment the img tag below and update the src
-        -->
-        <div class="conf-photo-wrap">
-          <div class="photo-placeholder">
-            <span>📸</span>
-            <div>Your conference photo</div>
-            <div style="font-size:0.6rem;opacity:0.5;margin-top:4px">Save as "conference.jpg" &amp; uncomment the img tag</div>
-          </div>
-          <!-- <img src="conference.jpg" alt="Esther presenting at the San Diego Undergraduate Tech Conference" /> -->
+      <div class="about-details fade-in">
+        <div class="detail-card">
+          <div class="detail-card-label">Education</div>
+          <div class="detail-card-value">B.S. Data Science · Minor in Linguistics<br>University of California, San Diego<br><span style="color:var(--muted);font-size:0.85rem">Expected June 2027</span></div>
         </div>
-        <div class="photo-caption">↑ San Diego Undergraduate Tech Conference, 2025</div>
-
-        <div class="about-cards">
-          <div class="detail-card">
-            <div class="detail-card-label">Education</div>
-            <div class="detail-card-value">B.S. Data Science · Minor in Linguistics<br>UC San Diego · <span style="color:var(--muted);font-size:0.85rem">Expected June 2027</span></div>
-          </div>
-          <div class="detail-card">
-            <div class="detail-card-label">Currently</div>
-            <div class="detail-card-value">Student Advocate @ UCSD Associated Students<br>Research @ Scripps Institution of Oceanography</div>
-          </div>
+        <div class="detail-card">
+          <div class="detail-card-label">Currently</div>
+          <div class="detail-card-value">Student Advocate @ UCSD Associated Students<br>Research @ Scripps Institution of Oceanography</div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-card-label">Seeking</div>
+          <div class="detail-card-value">Internships in Data Science · ML Engineering · Analytics</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── Experience ── -->
+  <!-- Experience -->
   <section id="experience">
     <div class="section-label">02 — Experience</div>
     <h2 class="section-title fade-in">Research &amp; <em>Work</em></h2>
@@ -713,7 +633,7 @@
     </div>
   </section>
 
-  <!-- ── Projects ── -->
+  <!-- Projects -->
   <section id="projects">
     <div class="section-label">03 — Projects</div>
     <h2 class="section-title fade-in">Selected <em>Work</em></h2>
@@ -723,27 +643,27 @@
       <div class="project-row fade-in">
         <div class="project-img-col">
           <!--
-            ADD SCREENSHOT:
-            1. Save screenshot as "hab-screenshot.png" in same folder
-            2. Delete the .project-img-placeholder div
-            3. Uncomment the img tag
+            TO ADD YOUR SCREENSHOT:
+            1. Save your image as "hab-screenshot.png" in the same folder as index.html
+            2. Delete the div.project-img-placeholder below
+            3. Uncomment the <img> tag
           -->
           <div class="project-img-placeholder">
             <div class="p-icon">🌊</div>
-            <div class="p-hint">Add screenshot: hab-screenshot.png</div>
+            <div class="p-hint">Add screenshot:<br>hab-screenshot.png</div>
           </div>
           <!-- <img src="hab-screenshot.png" alt="HAB Prediction Research" /> -->
           <div class="img-overlay">HAB Prediction Research</div>
         </div>
         <div class="project-content">
           <div class="project-meta">
-            <span class="project-badge">01</span>
+            <span class="project-num">01</span>
             <span class="project-event">Scripps Oceanography · 2025</span>
           </div>
           <div class="project-title">HAB Prediction Research</div>
           <div class="project-desc">
-            Analyzed 16.5 years of oceanographic time-series data and built a CNN-LSTM
-            hybrid model in PyTorch to forecast Harmful Algal Blooms, achieving 0.75 AUC-ROC.
+            Analyzed 16.5 years of oceanographic time-series data and built a CNN-LSTM hybrid
+            model in PyTorch to forecast Harmful Algal Blooms, achieving 0.75 AUC-ROC.
             Research submitted to the San Diego Undergraduate Tech Conference.
           </div>
           <div class="project-footer">
@@ -763,14 +683,14 @@
         <div class="project-img-col">
           <div class="project-img-placeholder">
             <div class="p-icon">🏋️</div>
-            <div class="p-hint">Add screenshot: fitsync-screenshot.png</div>
+            <div class="p-hint">Add screenshot:<br>fitsync-screenshot.png</div>
           </div>
           <!-- <img src="fitsync-screenshot.png" alt="FitSync" /> -->
           <div class="img-overlay">FitSync</div>
         </div>
         <div class="project-content">
           <div class="project-meta">
-            <span class="project-badge">02</span>
+            <span class="project-num">02</span>
             <span class="project-event">Apr – Jun 2025</span>
           </div>
           <div class="project-title">FitSync — Computer Vision Fitness App</div>
@@ -797,21 +717,21 @@
         <div class="project-img-col">
           <div class="project-img-placeholder">
             <div class="p-icon">📊</div>
-            <div class="p-hint">Add screenshot: glucoaster-screenshot.png</div>
+            <div class="p-hint">Add screenshot:<br>glucoaster-screenshot.png</div>
           </div>
           <!-- <img src="glucoaster-screenshot.png" alt="Glu-coaster" /> -->
           <div class="img-overlay">Glu-coaster</div>
         </div>
         <div class="project-content">
           <div class="project-meta">
-            <span class="project-badge">03</span>
+            <span class="project-num">03</span>
             <span class="project-event">May – Jun 2025</span>
           </div>
           <div class="project-title">Glu-coaster — Glucose Visualization</div>
           <div class="project-desc">
-            Automated data workflows to clean and process real-world health datasets,
-            then built interactive visualizations communicating complex glucose trends
-            clearly to non-technical audiences. Live demo available.
+            Automated data workflows to clean and process real-world health datasets, then built
+            interactive visualizations communicating complex glucose trends clearly to
+            non-technical audiences. Live demo available.
           </div>
           <div class="project-footer">
             <div class="project-tags">
@@ -830,14 +750,14 @@
         <div class="project-img-col">
           <div class="project-img-placeholder">
             <div class="p-icon">🏄</div>
-            <div class="p-hint">Add screenshot: sealevel-screenshot.png</div>
+            <div class="p-hint">Add screenshot:<br>sealevel-screenshot.png</div>
           </div>
           <!-- <img src="sealevel-screenshot.png" alt="Sea Level Anomaly Detection" /> -->
           <div class="img-overlay">Sea-Level Anomaly Detection</div>
         </div>
         <div class="project-content">
           <div class="project-meta">
-            <span class="project-badge">04</span>
+            <span class="project-num">04</span>
             <span class="project-event">NSF HDR ML Challenge · Jan 2025</span>
           </div>
           <div class="project-title">Sea-Level Anomaly Detection</div>
@@ -861,11 +781,11 @@
     </div>
   </section>
 
-  <!-- ── Skills ── -->
+  <!-- Skills -->
   <section id="skills">
     <div class="section-label">04 — Skills</div>
     <h2 class="section-title fade-in">Tools of the <em>Trade</em></h2>
-    <div class="skills-grid">
+    <div class="skills-layout">
       <div class="skill-group fade-in">
         <div class="skill-group-title">Languages</div>
         <div class="skill-list">
@@ -917,7 +837,7 @@
     </div>
   </section>
 
-  <!-- ── Leadership ── -->
+  <!-- Leadership -->
   <section id="leadership">
     <div class="section-label">05 — Leadership</div>
     <h2 class="section-title fade-in">On &amp; Off <em>Campus</em></h2>
@@ -926,24 +846,24 @@
         <div class="leadership-icon">⌨️</div>
         <div class="leadership-title">Secretary</div>
         <div class="leadership-org">Women in Computing (WIC)</div>
-        <div class="leadership-desc">Built Google Apps Script automation tools for a 180+ member org, improving data accuracy across 150+ annual events.</div>
+        <div class="leadership-desc">Built Google Apps Script automation tools for a 180+ member org, improving data accuracy and reporting across 150+ annual events.</div>
       </div>
       <div class="leadership-card fade-in">
         <div class="leadership-icon">📡</div>
         <div class="leadership-title">Public Outreach Chair</div>
         <div class="leadership-org">IEEE — Eta Kappa Nu (HKN)</div>
-        <div class="leadership-desc">Organized campus tours and STEM outreach events reaching 300+ prospective students.</div>
+        <div class="leadership-desc">Organized campus tours and STEM outreach events reaching 300+ prospective students and promoting access to engineering education.</div>
       </div>
       <div class="leadership-card fade-in">
         <div class="leadership-icon">📣</div>
         <div class="leadership-title">PR &amp; Marketing Chair</div>
         <div class="leadership-org">EDGE — Girls in Engineering</div>
-        <div class="leadership-desc">Data-driven content strategy grew Instagram to 750+ followers and drove 5,000+ content views.</div>
+        <div class="leadership-desc">Used data-driven content strategy to grow Instagram to 750+ followers and drive 5,000+ content views through targeted campaigns.</div>
       </div>
     </div>
   </section>
 
-  <!-- ── Contact ── -->
+  <!-- Contact -->
   <section id="contact">
     <div class="contact-grid">
       <div>
@@ -954,7 +874,7 @@
             <strong>My Resume</strong>
             Full experience, skills &amp; education in one place.
           </div>
-          <!-- ↓ UPDATE href to your resume PDF filename -->
+          <!-- UPDATE href to your resume PDF filename -->
           <a href="Esther_Chung_Resume.pdf" target="_blank" class="btn-resume-dl">
             <svg viewBox="0 0 24 24"><path d="M12 16l-4-4h2.5V4h3v8H16l-4 4z"/><path d="M4 20h16"/></svg>
             Download PDF
@@ -991,10 +911,9 @@
   </section>
 
   <script>
-    // Cursor
     const cur = document.getElementById('cursor');
     const ring = document.getElementById('cursorRing');
-    let mx=0,my=0,rx=0,ry=0;
+    let mx=0, my=0, rx=0, ry=0;
     document.addEventListener('mousemove', e => {
       mx=e.clientX; my=e.clientY;
       cur.style.left=mx+'px'; cur.style.top=my+'px';
@@ -1005,7 +924,6 @@
       requestAnimationFrame(anim);
     })();
 
-    // Scroll fade
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
     }, {threshold: 0.1});
